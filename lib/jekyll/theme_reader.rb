@@ -5,7 +5,8 @@ module Jekyll
   class ThemeReader < Reader
     def initialize(site)
       @site = site
-      @theme_data_files = Dir[File.join(@site.theme.root, site.config["data_dir"], "/*")]
+      @theme_data_files = Dir[File.join(@site.theme.root,
+        site.config["data_dir"], "**", "*.{yaml,yml,json,csv}")]
     end
 
     # Read Site data from disk and load it into internal data structures.
@@ -41,56 +42,96 @@ module Jekyll
     private
 
     def debug_theme_reader
-      Jekyll.logger.debug ""
-      Jekyll.logger.debug "Reading:", "Theme Data Files..."
-      
-      @theme_data_files.each do | file |
-        Jekyll.logger.debug "", file
+      print_clear_line
+      print "Reading:", "Theme Data Files..."
+      @theme_data_files.each do |file|
+        print_value file
       end
-      
-      Jekyll.logger.debug ""
-      Jekyll.logger.debug "Merging:", "Theme Data Hash..."
+      print_clear_line
+      print "Merging:", "Theme Data Hash..."
     end
 
     def debug_theme_data_reader
-      Jekyll.logger.debug ""
-      Jekyll.logger.debug "Site Data:"
-      theme = site.config["theme"]
-      @site.data.each do | key, value |
-        unless key == theme
-          print_key key
-          print_value value
+      print_clear_line
+      print "Site Data:"
+      process_hash @site.data
+      print_clear_line
+    end
+
+    def process_hash(hash)
+      hash.each do |key, value|
+        print_key key
+        if value.class == Hash
+          process_inner_hash value
+        else
+          print_value "'#{value}'"
         end
       end
-      Jekyll.logger.debug ""
     end
 
-    def print_key(key)
-      dashes = "------------------------"
-      key = key.to_s
-
-      Jekyll.logger.debug "", dashes
-      Jekyll.logger.debug "", key
-      Jekyll.logger.debug "", dashes
+    def process_inner_hash(hash)
+      hash.each do |key, value|
+        if value.class == Array
+          print_label key
+          extract_hashes_and_print value
+          print_dashes
+        elsif value.class == Hash
+          print_subkey_and_value key, value
+        else
+          print_hash key, value
+        end
+      end
     end
 
-    def print_value(value)
-      if value.class == Array
-        value.each do | entry |
-          entry.each do | k, v |
-            print_hash k, v
-          end
-        end
-      elsif value.class == Hash
-        value.each do | k, v |
-          print_hash k, v
-        end
+    def extract_hashes_and_print(array)
+      array.each do |h|
+        process_inner_hash h
       end
     end
 
     def print_hash(key, value)
       key = key.to_s + ":"
-      Jekyll.logger.debug key, value
+      print key, value
+    end
+
+    def print_key(key)
+      @dashes = "------------------------"
+      print_value @dashes.to_s.cyan
+      print "Data Key:", key.to_s.cyan
+      print_value @dashes.to_s.cyan
+    end
+
+    def print_subkey_and_value(key, value)
+      print_label key
+      print_dashes
+      value.each do |subkey, val|
+        print_hash subkey, val
+      end
+      print_dashes
+    end
+
+    def print_value(value)
+      if value.class == Array
+        extract_hashes_and_print value
+      else
+        print "", value
+      end
+    end
+
+    def print_label(key)
+      print "#{key.to_s}:"
+    end
+
+    def print_dashes
+      print "", @dashes
+    end
+
+    def print_clear_line
+      print ""
+    end
+
+    def print(arg1, arg2 = "")
+      Jekyll.logger.debug arg1, arg2
     end
   end
 end
