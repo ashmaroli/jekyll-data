@@ -38,7 +38,6 @@ module Jekyll
       end
     end
 
-
     private
 
     def debug_theme_reader
@@ -52,29 +51,45 @@ module Jekyll
     end
 
     def debug_theme_data_reader
-      print_clear_line
-      print "Site Data:"
-      process_hash @site.data
+      print "Inspecting:", "Site Data >>"
+      inspect_hash @site.data
       print_clear_line
     end
 
-    def process_hash(hash)
+    def inspect_hash(hash)
       hash.each do |key, value|
         print_key key
+        if key == @site.theme.name
+          inspect_theme_override value
+        end
         if value.class == Hash
-          process_inner_hash value
+          inspect_inner_hash value
+        elsif value.class == Array
+          print_label key
+          extract_hashes_and_print value
         else
           print_value "'#{value}'"
         end
       end
     end
 
-    def process_inner_hash(hash)
+    def inspect_theme_override(value)
+      if value == false
+        abort_with_msg "Cannot define or override Theme Configuration " \
+                       "with an empty file!"
+      end
+      unless value.class == Hash
+        abort_with_msg "Theme Config or its override should be a Hash of " \
+            "key:value pairs or mappings. But got #{value.class} instead."
+      end
+    end
+
+    def inspect_inner_hash(hash)
       hash.each do |key, value|
         if value.class == Array
           print_label key
           extract_hashes_and_print value
-          print_dashes
+          print_clear_line
         elsif value.class == Hash
           print_subkey_and_value key, value
         else
@@ -84,14 +99,17 @@ module Jekyll
     end
 
     def extract_hashes_and_print(array)
-      array.each do |h|
-        process_inner_hash h
+      array.each do |entry|
+        if entry.class == String
+          print "-", entry
+        else
+          inspect_inner_hash entry
+        end
       end
     end
 
     def print_hash(key, value)
-      key = key.to_s + ":"
-      print key, value
+      print "#{key}:", value
     end
 
     def print_key(key)
@@ -103,7 +121,6 @@ module Jekyll
 
     def print_subkey_and_value(key, value)
       print_label key
-      print_dashes
       value.each do |subkey, val|
         print_hash subkey, val
       end
@@ -119,7 +136,7 @@ module Jekyll
     end
 
     def print_label(key)
-      print "#{key.to_s}:"
+      print "#{key}:"
     end
 
     def print_dashes
@@ -132,6 +149,10 @@ module Jekyll
 
     def print(arg1, arg2 = "")
       Jekyll.logger.debug arg1, arg2
+    end
+
+    def abort_with_msg(msg)
+      Jekyll.logger.abort_with "JekyllData:", msg
     end
   end
 end
