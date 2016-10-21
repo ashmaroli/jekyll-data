@@ -2,7 +2,7 @@
 
 [![Gem Version](https://img.shields.io/gem/v/jekyll-data.svg)](https://rubygems.org/gems/jekyll-data)
 
-Introducing a plugin that reads data files within **jekyll theme gems** and adds it to the site's internal data hash.
+Introducing a plugin that reads data files within **jekyll theme gems** and adds the resulting hash to the site's internal data hash.
 
 ## Installation
 
