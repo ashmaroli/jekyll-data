@@ -1,6 +1,9 @@
 # JekyllData
 
 [![Gem Version](https://img.shields.io/gem/v/jekyll-data.svg)](https://rubygems.org/gems/jekyll-data)
+[![Build Status](https://img.shields.io/travis/ashmaroli/jekyll-data/master.svg?label=Build%20Status)][travis]
+
+[travis]: https://travis-ci.org/ashmaroli/jekyll-data
 
 Introducing a plugin that reads data files within **jekyll theme gems** and adds the resulting hash to the site's internal data hash.
 
