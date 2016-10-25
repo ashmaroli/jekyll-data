@@ -29,28 +29,33 @@ module Jekyll
       if site.theme && site.theme.data_path
         #
         # show contents of "<theme>/_data/" dir being read
-        debug_theme_reader
+        inspect_theme_data
         theme_data = ThemeDataReader.new(site).read(site.config["data_dir"])
         @site.data = Utils.deep_merge_hashes(theme_data, @site.data)
         #
         # show site.data hash contents
-        debug_theme_data_reader
+        inspect_merged_hash
       end
     end
 
     private
 
-    def debug_theme_reader
+    def inspect_theme_data
       print_clear_line
       print "Reading:", "Theme Data Files..."
       @theme_data_files.each do |file|
-        print_value file
+        if File.basename(file, ".*") == @site.theme.name
+          inspect_theme_config file
+          print_value file.green
+        else
+          print_value file
+        end
       end
       print_clear_line
       print "Merging:", "Theme Data Hash..."
     end
 
-    def debug_theme_data_reader
+    def inspect_merged_hash
       print "Inspecting:", "Site Data >>"
       inspect_hash @site.data
       print_clear_line
@@ -60,11 +65,12 @@ module Jekyll
       hash.each do |key, value|
         print_key key
         if key == @site.theme.name
-          inspect_theme_override value
+          validate_config_hash value
         end
-        if value.class == Hash
+
+        if value.is_a? Hash
           inspect_inner_hash value
-        elsif value.class == Array
+        elsif value.is_a? Array
           print_label key
           extract_hashes_and_print value
         else
@@ -73,24 +79,13 @@ module Jekyll
       end
     end
 
-    def inspect_theme_override(value)
-      if value == false
-        abort_with_msg "Cannot define or override Theme Configuration " \
-                       "with an empty file!"
-      end
-      unless value.class == Hash
-        abort_with_msg "Theme Config or its override should be a Hash of " \
-            "key:value pairs or mappings. But got #{value.class} instead."
-      end
-    end
-
     def inspect_inner_hash(hash)
       hash.each do |key, value|
-        if value.class == Array
+        if value.is_a? Array
           print_label key
           extract_hashes_and_print value
           print_clear_line
-        elsif value.class == Hash
+        elsif value.is_a? Hash
           print_subkey_and_value key, value
         else
           print_hash key, value
@@ -100,11 +95,27 @@ module Jekyll
 
     def extract_hashes_and_print(array)
       array.each do |entry|
-        if entry.class == String
+        if entry.is_a? String
           print "-", entry
         else
           inspect_inner_hash entry
         end
+      end
+    end
+
+    def inspect_theme_config(path)
+      config = ThemeDataReader.new(site).read_data_file(path)
+      validate_config_hash config
+    end
+
+    def validate_config_hash(value)
+      if value == false
+        abort_with_msg "Cannot define or override Theme Configuration " \
+                       "with an empty file!"
+      end
+      unless value.is_a? Hash
+        abort_with_msg "Theme Config or its override should be a Hash of " \
+            "key:value pairs or mappings. But got #{value.class} instead."
       end
     end
 
@@ -128,7 +139,7 @@ module Jekyll
     end
 
     def print_value(value)
-      if value.class == Array
+      if value.is_a? Array
         extract_hashes_and_print value
       else
         print "", value
