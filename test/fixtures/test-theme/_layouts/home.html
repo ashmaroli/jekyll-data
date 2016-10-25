@@ -1,0 +1,11 @@
+---
+layout: default
+---
+<div class="home">
+<h2 class="page-heading lang">{{ site.data.locales[site.lang].greeting }}</h2>
+{{ content }}
+<p class="pager">
+<a href="{{ "/prev/" | relative_url }}">{{ site.data.locales[site.lang].prev }}</a>
+<a href="{{ "/next/" | relative_url }}">{{ site.data.locales[site.lang].next }}</a>
+</p>
+</div>
