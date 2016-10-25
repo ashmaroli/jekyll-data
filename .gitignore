@@ -8,3 +8,7 @@
 /pkg/
 /spec/reports/
 /tmp/
+.jekyll-metadata
+.ruby-version
+.sass-cache
+test/dest
