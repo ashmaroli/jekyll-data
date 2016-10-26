@@ -1,0 +1,6 @@
+# theme config-override with data as an array (sequences)
+#
+- key: logo
+- value: logo.png
+- key: sidebar
+- value: disabled

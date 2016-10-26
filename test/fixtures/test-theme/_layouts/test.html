@@ -1,0 +1,9 @@
+<!-- test.html from test-theme: -->
+<div id="main">
+{{ content }}
+</div>
+{% unless theme.sidebar == 'disabled' %}<div class="sidebar">[--SIDEBAR CODE HERE--]</div>
+{% else %}<div id="main_nav">[--HORIZONTAL NAVBAR CODE--]</div>{% endunless %}
+<div id="footer">
+{% include footer-links.html %}
+</div>

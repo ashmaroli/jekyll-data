@@ -1,0 +1,19 @@
+# Theme Configuration
+# -------------------
+# Like the _config.yml in the site source this file too requires to be
+# a Hash and similarly allows arbitrary variables to be defined which
+# can be accessed within the templates either as
+# {{ site.data.[theme-name].myvariable }} or by simply using the 'theme'
+# namespace like: {{ theme.myvariable }}. To override, simply create
+# a data-file using the keys defined here. When overriding a mapping,
+# any sub-key undefined at site-source will not fallback to the defined
+# sub-key of the same mapping here.
+#
+
+logo: logo.png # enter 'disable' to use `site.title` instead.
+sidebar: enabled # enter 'disable' to activate horizontal navbar.
+theme_variant: Charcoal # choose from 'Ocean', 'Grass', 'Charcoal'
+
+recent_posts:
+  style: list # choose from 'list' and 'grid'.
+  quantity: '4' # either '4' or '6'
