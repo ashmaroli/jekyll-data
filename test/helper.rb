@@ -3,6 +3,7 @@ require "jekyll"
 require "minitest/autorun"
 require "minitest/reporters"
 require "minitest/profile"
+require "rspec/mocks"
 
 require_relative "../lib/jekyll-data.rb"
 
@@ -51,6 +52,30 @@ end
 class JekyllDataTest < Minitest::Test
   include Jekyll
   include DirectoryHelpers
+  include ::RSpec::Mocks::ExampleMethods
+
+  def mu_pp(obj)
+    s = obj.is_a?(Hash) ? JSON.pretty_generate(obj) : obj.inspect
+    s = s.encode Encoding.default_external if defined? Encoding
+    s
+  end
+
+  def mocks_expect(*args)
+    RSpec::Mocks::ExampleMethods::ExpectHost.instance_method(:expect)\
+      .bind(self).call(*args)
+  end
+
+  def before_setup
+    RSpec::Mocks.setup
+    super
+  end
+
+  def after_teardown
+    super
+    RSpec::Mocks.verify
+  ensure
+    RSpec::Mocks.teardown
+  end
 
   def fixture_site(overrides = {})
     Jekyll::Site.new(site_configuration(overrides))

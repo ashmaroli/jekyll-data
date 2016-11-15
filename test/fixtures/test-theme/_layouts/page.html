@@ -1,0 +1,13 @@
+---
+layout: test
+---
+<div class="home">
+<h2 class="page-heading lang">Site Details</h2>
+{{ content }}
+<div>
+<p>Is logo enabled? {% unless theme.logo == 'disabled' %}{{ theme.logo }}{% endunless %}</p>
+<p>Theme Variant: {{ theme.theme_variant }}</p>
+<p>Show recent posts in a: {{ theme.recent_posts.style }}</p>
+<p>Max no. of recent posts: {{ theme.recent_posts.quantity }}</p>
+</div>
+</div>
