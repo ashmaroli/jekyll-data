@@ -12,8 +12,14 @@ require_relative "jekyll/drops/unified_payload_drop"
 
 # replace Jekyll::Reader with a subclass Jekyll::ThemeReader only if the site
 # uses a gem-based theme else have this plugin disabled.
+#
+# Additionally, append to site's config hash with optional config hash from the
+# theme gem by filling in keys not already defined.
 Jekyll::Hooks.register :site, :after_init do |site|
   if site.theme
+    site.config = Jekyll::Utils.deep_merge_hashes(
+      Jekyll::ThemeReader.new(site).read_theme_config, site.config
+    )
     site.reader = Jekyll::ThemeReader.new(site)
   else
     Jekyll.logger.abort_with(

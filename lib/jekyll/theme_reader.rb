@@ -36,6 +36,19 @@ module Jekyll
       end
     end
 
+    # Read the '_config.yml' file if present within the theme gem and
+    # return a data hash otherwise return a hash of Jekyll Defaults.
+    #
+    # Returns a hash
+    def read_theme_config
+      config = @site.in_theme_dir("_config.yml")
+      if File.exist?(config)
+        Configuration.new.read_config_file(config)
+      else
+        Configuration::DEFAULTS
+      end
+    end
+
     private
 
     # Private:

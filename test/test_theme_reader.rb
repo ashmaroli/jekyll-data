@@ -63,4 +63,21 @@ class TestThemeReader < JekyllDataTest
         File.read(File.join(fixture_dir, "same_data_output.html"))
     end
   end
+
+  context "theme gem shipped with a '_config.yml'" do
+    setup do
+      @site = fixture_site(
+        "title" => "Config Test"
+      )
+    end
+
+    should "have its hash appended to site's config hash" do
+      assert_contains @site.config, %w(post_excerpts enabled)
+    end
+
+    should "have its hash added only where its not already set" do
+      refute_equal "Test Theme", @site.config["title"]
+      assert_equal "Config Test", @site.config["title"]
+    end
+  end
 end
