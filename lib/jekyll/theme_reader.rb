@@ -13,20 +13,15 @@ module Jekyll
     #
     # Returns nothing.
     def read
-      @site.layouts = LayoutReader.new(site).read
-      read_directories
-      sort_files!
-      @site.data = DataReader.new(site).read(site.config["data_dir"])
+      super
       read_theme_data
-      CollectionReader.new(site).read
-      ThemeAssetsReader.new(site).read
     end
 
     # Read data files within a theme gem and add them to internal data
     #
     # Returns a hash appended with new data
     def read_theme_data
-      if site.theme && site.theme.data_path
+      if site.theme.data_path
         #
         # show contents of "<theme>/_data/" dir being read while degugging.
         # Additionally validate if a data file with the same name as the
