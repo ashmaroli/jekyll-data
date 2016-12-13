@@ -9,7 +9,7 @@ module Jekyll
         site.config["data_dir"], "**", "*.{yaml,yml,json,csv}")]
     end
 
-    # Read Site data from disk and load it into internal data structures.
+    # Read data files within theme-gem.
     #
     # Returns nothing.
     def read
@@ -54,7 +54,7 @@ module Jekyll
     # Private:
     # Print messages only while debugging.
     #
-    # Inspect the theme configuration file (data-file with the same name
+    # Inspect the theme configuration file (data file with the same name
     # as the theme) and print a success message, if valid.
     def inspect_theme_data
       print_clear_line
