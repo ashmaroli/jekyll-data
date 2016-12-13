@@ -1,0 +1,10 @@
+title: Test Theme
+email: tester@domain.com
+# the '>' means to ignore newlines until "baseurl:"
+description: >
+  Powered by a test-theme.
+  This text has been inserted by your theme gem.
+  Override by defining a "description:" key in the config file at source.
+baseurl: ""
+markdown: kramdown
+post_excerpts: enabled # "enabled" / "disabled"
