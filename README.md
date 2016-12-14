@@ -29,6 +29,9 @@ gems:
 bundle install
 ```
 
+> **Note: If the plugin has been marked as a `runtime_dependency` by the theme-gem's author it will be installed automatically with the theme-gem and hence need not be included in the Gemfile. Simply including it in the config file alone will suffice.**
+
+
 ## Usage
 
 **Note:** *This plugin will only run in conjunction with a gem-based Jekyll-theme.*
