@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ashwin Maroli"]
   spec.email         = ["ashmaroli@gmail.com"]
 
-  spec.summary       = %q{A plugin to read data files in Jekyll Theme Gems}
+  spec.summary       = %q{A plugin to read '_config.yml' and data files in Jekyll Theme Gems}
   spec.homepage      = "https://github.com/ashmaroli/jekyll-data"
   spec.license       = "MIT"
 
