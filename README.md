@@ -44,21 +44,36 @@ If the theme-gem also includes a `_config.yml` at its root, then it will be read
 
 Jekyll themes (built prior to Jekyll 3.2) usually ship with configuration settings defined in the config file, which are then used within the theme's template files directly under the `site` namespace (e.g. `{{ site.myvariable }}`). This is not possible with theme gems as a config file and data-files within gems are not natively read (as of Jekyll 3.3), and hence require end-users to inspect a *demo* or *example* directory to source those files.
 
-This plugin provides a couple of solutions to that hurdle:  
+This plugin provides a solution to that hurdle:
 
-  - settings via `_config.yml`  
-  ----------------------------  
-  This plugin reads the config file (at present only `_config.yml`) and uses the data to modify the site's config hash. This allows the gem to continue using `{{ site.myvariable }}` within its templates.
-  - settings via `_data/[theme-name].*`  
-  --------------------------------------  
-  An alternate route is to have theme-specific settings defined as a hash, in a valid data file named the same as the theme-gem.
-  The defined settings will be accessible via `{{ theme.myvariable }}`.  
-  e.g. if *minima* were to ship a YAML file with *minima*-specific settings (say, `post_excerpt: enabled`), then the gem would've a **_data/minima.yml** and this particular setting can be accessed in its templates via `{{ theme.post_excerpt }}` which is functionally equivalent to `{{ site.data.minima.post_excerpt }}`  
-  *Note: The `{{ theme.variable }}` is only available if the data-file is named the same as the theme-gem.*
+JekyllData now reads the config file (at present only `_config.yml`) present within the theme-gem and uses the data to modify the site's config hash. This allows the theme-gem to continue using `{{ site.myvariable }}` within its templates and work out-of-the-box as intended, with minimal user intervention.
 
-### Regular Data-files
+#### The `theme` namespace
 
-Regular data files that may be used to supplement theme templates (e.g. locales and translated UI text) can be named as desired. Either use a sub-directory to house related data-files or declare all of them as a mapped data block within a single file.
+From v0.5, JekyllData no longer supports reading theme configuration provided as a `[theme-name].***` file within the `_data` directory and instead the `theme` namespace points to a certain key in the bundled `_config.yml`.
+
+For `{{ theme.variable }}` to work, the config file should nest all such key-value pairs under the `[theme-name]` key, as outlined in the example below for a theme-gem called `solitude`:
+
+```yaml
+# <solitude-0.1.0>/_config.yml
+
+# the settings below have been used in this theme's templates via the
+# `theme` namespace. e.g. `{{ theme.recent_posts.style }}` instead of
+# using `{{ site.solitude.recent_posts.style }}` though both are
+# functionally the same.
+#
+solitude:
+  sidebar: true # enter 'false' to enable horizontal navbar instead.
+  theme_variant: Charcoal # choose from 'Ocean', 'Grass', 'Charcoal'
+  recent_posts:
+    style: list # choose from 'list' and 'grid'.
+    quantity: '4' # either '4' or '6'
+
+```
+
+### Data-files
+
+Data files may be used to supplement theme templates (e.g. locales and translated UI text) and can be named as desired. Either use a sub-directory to house related data-files or declare all of them as a mapped data block within a single file.
 
 ```yaml
 # <theme-gem>/_data/apparel.yml

@@ -5,7 +5,8 @@ module Jekyll
   class ThemeReader < Reader
     def initialize(site)
       @site = site
-      @theme_data_files = Dir[File.join(@site.theme.root,
+      @theme = site.theme
+      @theme_data_files = Dir[File.join(site.theme.root,
         site.config["data_dir"], "**", "*.{yaml,yml,json,csv}")]
     end
 
@@ -21,17 +22,14 @@ module Jekyll
     #
     # Returns a hash appended with new data
     def read_theme_data
-      if site.theme.data_path
+      if @theme.data_path
         #
         # show contents of "<theme>/_data/" dir being read while degugging.
-        # Additionally validate if a data file with the same name as the
-        # theme (= theme config or theme config-override) is a Hash.
         inspect_theme_data
         theme_data = ThemeDataReader.new(site).read(site.config["data_dir"])
         @site.data = Utils.deep_merge_hashes(theme_data, @site.data)
         #
-        # check if the merged hash is suitable for generating the site.
-        # Also show contents of merged site.data hash while debugging.
+        # show contents of merged site.data hash while debugging.
         inspect_merged_hash
       end
     end
@@ -39,11 +37,14 @@ module Jekyll
     # Read the '_config.yml' file if present within the theme gem and
     # return a data hash otherwise return a hash of Jekyll Defaults.
     #
-    # Returns a hash
+    # Returns a Configuration Hash
     def read_theme_config
-      config = @site.in_theme_dir("_config.yml")
-      if File.exist?(config)
-        Configuration.new.read_config_file(config)
+      file = @site.in_theme_dir("_config.yml")
+      if File.exist?(file)
+        config = Configuration.new.read_config_file(file)
+        validate_config_hash config[@theme.name] unless config[@theme.name].nil?
+
+        config
       else
         Configuration::DEFAULTS
       end
@@ -52,31 +53,36 @@ module Jekyll
     private
 
     # Private:
-    # Print messages only while debugging.
+    # (only while debugging)
     #
-    # Inspect the theme configuration file (data file with the same name
-    # as the theme) and print a success message, if valid.
+    # Print a list of data file(s) within the theme-gem
     def inspect_theme_data
       print_clear_line
       print "Reading:", "Theme Data Files..."
-      @theme_data_files.each do |file|
-        if File.basename(file, ".*") == @site.theme.name
-          inspect_theme_config file
-          print_value file.green
-        else
-          print_value file
-        end
-      end
+      @theme_data_files.each { |file| print_value file }
       print_clear_line
       print "Merging:", "Theme Data Hash..."
     end
 
     # Private:
-    # Print contents of the merged data hash while debugging
+    # (only while debugging)
+    #
+    # Print contents of the merged data hash
     def inspect_merged_hash
       print "Inspecting:", "Site Data >>"
       inspect_hash @site.data
       print_clear_line
+    end
+
+    # Private:
+    #
+    # Validate the <theme.name> key's value to be accessed via the
+    # `theme` namespace
+    def validate_config_hash(value)
+      unless value.is_a? Hash
+        abort_with_msg "Theme Configuration should be a Hash of " \
+            "key:value pairs or mappings. But got #{value.class} instead."
+      end
     end
 
     # Private helper methods to inspect data hash and output contents
@@ -84,17 +90,12 @@ module Jekyll
 
     # Dissect the (merged) site.data hash and print its contents
     #
-    # - Print the key string(s) and if matches theme name, validate its
-    #   value as well.
+    # - Print the key string(s)
     # - Individually analyse the hash[key] values and extract contents
     #   to output.
     def inspect_hash(hash)
       hash.each do |key, value|
         print_key key
-        if key == @site.theme.name
-          validate_config_hash value
-        end
-
         if value.is_a? Hash
           inspect_inner_hash value
         elsif value.is_a? Array
@@ -130,23 +131,6 @@ module Jekyll
         else
           inspect_inner_hash entry
         end
-      end
-    end
-
-    # analyse the theme config file and validate it as Hash
-    def inspect_theme_config(path)
-      config = ThemeDataReader.new(site).read_data_file(path)
-      validate_config_hash config
-    end
-
-    def validate_config_hash(value)
-      if value == false
-        abort_with_msg "Cannot define or override Theme Configuration " \
-                       "with an empty file!"
-      end
-      unless value.is_a? Hash
-        abort_with_msg "Theme Config or its override should be a Hash of " \
-            "key:value pairs or mappings. But got #{value.class} instead."
       end
     end
 
