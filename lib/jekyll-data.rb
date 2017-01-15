@@ -3,6 +3,7 @@ require "jekyll-data/version"
 
 # Plugin inclusions
 require_relative "jekyll/theme_reader"
+require_relative "jekyll/theme_configuration"
 require_relative "jekyll/readers/theme_data_reader"
 require_relative "jekyll/drops/themed_site_drop"
 
