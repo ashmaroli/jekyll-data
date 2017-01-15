@@ -8,3 +8,12 @@ description: >
 baseurl: ""
 markdown: kramdown
 post_excerpts: enabled # "enabled" / "disabled"
+
+# Theme configurations
+test-theme:
+  logo: logo.png # enter 'disable' to use `site.title` instead.
+  sidebar: enabled # enter 'disable' to activate horizontal navbar.
+  theme_variant: Charcoal # choose from 'Ocean', 'Grass', 'Charcoal'
+  recent_posts:
+    style: list # choose from 'list' and 'grid'.
+    quantity: '4' # either '4' or '6'
