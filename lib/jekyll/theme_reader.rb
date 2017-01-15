@@ -41,7 +41,7 @@ module Jekyll
     def read_theme_config
       file = @site.in_theme_dir("_config.yml")
       if File.exist?(file)
-        config = Configuration.new.read_config_file(file)
+        config = ThemeConfiguration.new.read_config(file)
         validate_config_hash config[@theme.name] unless config[@theme.name].nil?
 
         config
