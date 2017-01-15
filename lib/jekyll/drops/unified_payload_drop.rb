@@ -17,8 +17,7 @@ module Jekyll
       end
 
       def theme
-        theme_name = site.theme.name
-        site.data[theme_name]
+        @theme_drop ||= site[site.theme.name]
       end
 
       private
