@@ -34,22 +34,6 @@ module Jekyll
       end
     end
 
-    # Read the '_config.yml' file if present within the theme gem and
-    # return a data hash otherwise return a hash of Jekyll Defaults.
-    #
-    # Returns a Configuration Hash
-    def read_theme_config
-      file = @site.in_theme_dir("_config.yml")
-      if File.exist?(file)
-        config = ThemeConfiguration.new.read_config(file)
-        validate_config_hash config[@theme.name] unless config[@theme.name].nil?
-
-        config
-      else
-        Configuration::DEFAULTS
-      end
-    end
-
     private
 
     # Private:
@@ -72,17 +56,6 @@ module Jekyll
       print "Inspecting:", "Site Data >>"
       inspect_hash @site.data
       print_clear_line
-    end
-
-    # Private:
-    #
-    # Validate the <theme.name> key's value to be accessed via the
-    # `theme` namespace
-    def validate_config_hash(value)
-      unless value.is_a? Hash
-        abort_with_msg "Theme Configuration should be a Hash of " \
-            "key:value pairs or mappings. But got #{value.class} instead."
-      end
     end
 
     # Private helper methods to inspect data hash and output contents
@@ -184,10 +157,6 @@ module Jekyll
     # Redefine Jekyll Loggers
     def print(arg1, arg2 = "")
       Jekyll.logger.debug arg1, arg2
-    end
-
-    def abort_with_msg(msg)
-      Jekyll.logger.abort_with "JekyllData:", msg
     end
   end
 end
