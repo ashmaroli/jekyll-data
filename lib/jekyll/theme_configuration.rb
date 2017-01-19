@@ -9,7 +9,7 @@ module Jekyll
       #
       # site: current Jekyll::Site instance.
       #
-      # Returns a config Hash to be used by an 'after_init' hook.
+      # Returns a config Hash to be used by an 'after_reset' hook.
       def reconfigure(site)
         default_hash = Configuration::DEFAULTS
         theme_config = ThemeConfiguration.new(site).read_theme_config
@@ -20,7 +20,10 @@ module Jekyll
         ).reject { |key, value| value == default_hash[key] }
 
         # Merge DEFAULTS < _config.yml in theme-gem < _config.yml at source
-        Configuration.from(Utils.deep_merge_hashes(theme_config, config))
+        # and redefine site.config
+        site.config = Configuration.from(
+          Utils.deep_merge_hashes(theme_config, config)
+        )
       end
     end
 
@@ -30,39 +33,27 @@ module Jekyll
       @site = site
     end
 
-    # Public: Read the '_config.yml' file within the theme-gem and return a
-    #         data hash alongwith outputting the path to the config file.
-    #         Additionally validates that 'value' of '<site.theme.name> key',
-    #         when present, is a Hash.
+    # Public: Read the '_config.yml' file within the theme-gem.
+    #         Additionally validates that the extracted config data and the
+    #         the 'value' of '<site.theme.name> key', when present, is a Hash.
     #
     # Returns a Configuration Hash
     def read_theme_config
       file = @site.in_theme_dir("_config.yml")
-      config = read_config(file)
       theme_name = @site.theme.name
 
-      validate_config_hash config[theme_name] unless config[theme_name].nil?
-      config
-    end
-
-    # Public: Read configuration file within theme-gem and return extracted Hash
-    #         accompanied by a logger output of its path.
-    #
-    # file - the _config.yml within theme-gem to be read in
-    #
-    # Returns a Hash
-    def read_config(file)
       config = safe_load_file(file)
 
       check_config_is_hash!(config, file)
-      Jekyll.logger.info "Theme Config file:", file
+      validate_config_hash config[theme_name] unless config[theme_name].nil?
+
       config
     end
 
     private
 
-    # Validate the <site.theme.name> key's value to be accessed via the
-    # `theme` namespace
+    # Validate the <site.theme.name> key's value to be accessed via the `theme`
+    # namespace.
     def validate_config_hash(value)
       unless value.is_a? Hash
         Jekyll.logger.abort_with "JekyllData:", "Theme Configuration should be a " \
