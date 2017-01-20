@@ -9,6 +9,7 @@ require_relative "jekyll/drops/themed_site_drop"
 
 # Monkey-patches
 require_relative "jekyll/theme"
+require_relative "jekyll/build_options"
 require_relative "jekyll/drops/unified_payload_drop"
 
 # replace Jekyll::Reader with a subclass Jekyll::ThemeReader only if the site
