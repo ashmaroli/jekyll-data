@@ -1,0 +1,15 @@
+*.xml
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
+/Gemfile.lock
+_site
+.jekyll-metadata
+.ruby-version
+.sass-cache
+test/dest
