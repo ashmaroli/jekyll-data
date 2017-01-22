@@ -4,15 +4,18 @@ language: ruby
 sudo: false
 
 rvm:
-  - &ruby1 2.3.1
-  - &ruby2 2.2.5
-  - &ruby3 2.1.9
-  - &jruby jruby-9.1.2.0
+  - &ruby1 2.4.0
+  - &ruby2 2.3.3
+  - &ruby3 2.2.6
+  - &ruby4 2.1.9
+  - &jruby jruby-9.1.7.0
 
 matrix:
   include:
     - rvm: *ruby1
       env: TEST_SUITE=fmt
+    - rvm: *ruby1
+      env: TEST_SUITE=test-site
   exclude:
     - rvm: *jruby
       env: TEST_SUITE=cucumber
@@ -21,3 +24,7 @@ env:
   matrix:
     - TEST_SUITE=test
     - TEST_SUITE=cucumber
+
+before_install:
+  - gem update --system
+  - gem --version
