@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Runs the `jekyll build` command with various switches and builds the default site as a sanity check
+
+set -e
+
+cd test/fixtures/test-site
+
+if ! jekyll -v
+then
+  echo ""
+  echo "Installing site dependencies"
+  echo "----------------------------"
+  BUNDLE_GEMFILE=Gemfile bundle install
+fi
+
+echo ""
+echo "Building the site with default options"
+echo "--------------------------------------"
+
+if BUNDLE_GEMFILE=Gemfile bundle exec jekyll build --trace
+then
+  echo ""
+  echo "Build Success."
+  echo ""
+  echo "Building the site with --verbose"
+  echo "--------------------------------"
+  BUNDLE_GEMFILE=Gemfile bundle exec jekyll build --verbose --trace
+
+  echo ""
+  echo "Build Success."
+  echo ""
+  echo "Building the site with --verbose and --data"
+  echo "-------------------------------------------"
+  BUNDLE_GEMFILE=Gemfile bundle exec jekyll build --safe --verbose --data --trace
+
+  exit 0
+else
+  echo ""
+  echo "Error building site."
+
+  exit 1
+fi
