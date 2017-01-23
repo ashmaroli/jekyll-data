@@ -1,16 +1,17 @@
 require "jekyll"
 require "jekyll-data/version"
 
-# Plugin inclusions
-require_relative "jekyll/theme_reader"
-require_relative "jekyll/theme_configuration"
-require_relative "jekyll/readers/theme_data_reader"
-require_relative "jekyll/drops/themed_site_drop"
+module JekyllData
+  autoload :Reader,             "jekyll-data/reader"
+  autoload :ThemedSiteDrop,     "jekyll-data/themed_site_drop"
+  autoload :ThemeDataReader,    "jekyll-data/theme_data_reader"
+  autoload :ThemeConfiguration, "jekyll-data/theme_configuration"
+end
 
 # Monkey-patches
 require_relative "jekyll/theme"
 require_relative "jekyll/build_options"
-require_relative "jekyll/drops/unified_payload_drop"
+require_relative "jekyll/unified_payload_drop"
 
 # ----------------------------------------------------------------------------
 # Modify the current site instance if it uses a gem-based theme else have this
@@ -22,7 +23,7 @@ require_relative "jekyll/drops/unified_payload_drop"
 Jekyll::Hooks.register :site, :after_reset do |site|
   if site.theme
     @file = site.in_theme_dir("_config.yml")
-    Jekyll::ThemeConfiguration.reconfigure(site) if File.exist?(@file)
+    JekyllData::ThemeConfiguration.reconfigure(site) if File.exist?(@file)
   else
     Jekyll.logger.abort_with(
       "JekyllData:",
@@ -33,8 +34,8 @@ Jekyll::Hooks.register :site, :after_reset do |site|
 end
 
 # ---------------------------------------------------------------------------
-# Replace Jekyll::Reader with a subclass Jekyll::ThemeReader only if the site
-# uses a gem-based theme.
+# Replace Jekyll::Reader with a subclass JekyllData::Reader only if the
+# site uses a gem-based theme.
 #
 # If a _config.yml exists at the root of the theme-gem, output its path.
 # Placed here inorder to avoid outputting the path after every regeneration.
@@ -42,6 +43,6 @@ end
 Jekyll::Hooks.register :site, :after_init do |site|
   if site.theme
     Jekyll.logger.info "Theme Config file:", @file if File.exist?(@file)
-    site.reader = Jekyll::ThemeReader.new(site)
+    site.reader = JekyllData::Reader.new(site)
   end
 end

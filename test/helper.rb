@@ -51,6 +51,7 @@ end
 
 class JekyllDataTest < Minitest::Test
   include Jekyll
+  include JekyllData
   include DirectoryHelpers
   include ::RSpec::Mocks::ExampleMethods
 

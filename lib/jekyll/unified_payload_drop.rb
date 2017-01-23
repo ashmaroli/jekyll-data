@@ -13,7 +13,7 @@ module Jekyll
       end
 
       def site
-        @site_drop ||= ThemedSiteDrop.new(@obj)
+        @site_drop ||= JekyllData::ThemedSiteDrop.new(@obj)
       end
 
       def theme
