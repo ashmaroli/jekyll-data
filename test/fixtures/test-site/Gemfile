@@ -1,0 +1,25 @@
+source "https://rubygems.org"
+
+gem "jekyll", "~> 3.3"
+
+# use the local-versions of the gems for tests.
+# gem "test-plugin" is placed here to use the `:path` method to point to the local version.
+#
+# For real sites, there are following options:
+#
+#   - If the theme-gem includes a '_config.yml' with the plugin listed under `gems:`
+#     then:
+#     - then there's no need to include the plugin in the Gemfile if (the plugin)
+#       has been marked as a 'runtime_dependency'.
+#     - otherwise, include it here, not necessarily under the ':jekyll_plugins' group
+#
+#   - You'll have to include the plugin(s) either in your `_config.yml`, under 'gems:'
+#     or in the Gemfile under ':jekyll_plugins' group 
+gem "test-theme", path: File.expand_path("../test-theme", __dir__)
+gem "test-plugin", path: File.expand_path("../test-plugin", __dir__)
+
+# Recommended: all other plugins outside the theme's scope including 'jekyll-data' to be added under this group.
+group :jekyll_plugins do
+  gem "jekyll-data", path: File.expand_path("../../../", __dir__)
+  gem "another-test-plugin", path: File.expand_path("../another-test-plugin", __dir__)
+end

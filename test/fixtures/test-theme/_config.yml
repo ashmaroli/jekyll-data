@@ -17,3 +17,5 @@ test-theme:
   recent_posts:
     style: list # choose from 'list' and 'grid'.
     quantity: '4' # either '4' or '6'
+gems:
+  - test-plugin
