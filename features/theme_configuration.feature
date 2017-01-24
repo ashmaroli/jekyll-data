@@ -14,7 +14,7 @@ Feature: Configuring Gem-based Themes
     Then I should get a non-zero exit status
     And I should see "JekyllData: Error!" in the build output
     And the _site directory should not exist
-    And the "_site/feed.xml" file should not exist
+    And the "_site/test-feed.xml" file should not exist
 
   Scenario: Theme-gem has a config file with valid 'gems' array
     Given I have a configuration file with:
@@ -27,7 +27,7 @@ Feature: Configuring Gem-based Themes
     When I run bundle exec jekyll build
     Then I should get a zero exit status
     And the _site directory should exist
-    And the "_site/feed.xml" file should exist
+    And the "_site/test-feed.xml" file should exist
 
   Scenario: Overriding the 'gems' array in a config file within theme-gem
     Given I have a configuration file with:
@@ -41,8 +41,8 @@ Feature: Configuring Gem-based Themes
     When I run bundle exec jekyll build
     Then I should get a zero exit status
     And the _site directory should exist
-    And the "_site/sitemap.xml" file should exist
-    And the "_site/feed.xml" file should not exist
+    And the "_site/test-sitemap.xml" file should exist
+    And the "_site/test-feed.xml" file should not exist
 
   Scenario: Theme-gem has a config file with valid '<theme-name>' object
     Given I have a configuration file with:
