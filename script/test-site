@@ -31,7 +31,7 @@ then
   echo ""
   echo "Building the site with --verbose and --data"
   echo "-------------------------------------------"
-  BUNDLE_GEMFILE=Gemfile bundle exec jekyll build --safe --verbose --data --trace
+  BUNDLE_GEMFILE=Gemfile bundle exec jekyll build --verbose --data --trace
 
   exit 0
 else

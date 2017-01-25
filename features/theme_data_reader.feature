@@ -14,7 +14,7 @@ Feature: Reading Data files in Gem-based Themes
     Then I should get a non-zero exit status
     And I should see "JekyllData: Error!" in the build output
     And the _site directory should not exist
-    And the "_site/feed.xml" file should not exist
+    And the "_site/test-feed.xml" file should not exist
 
   Scenario: Theme-gem has a data file to support i18n
     Given I have a configuration file with:
