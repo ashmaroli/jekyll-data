@@ -1,8 +1,8 @@
 # encoding: UTF-8
 require "csv"
 
-module Jekyll
-  class ThemeReader < Reader
+module JekyllData
+  class Reader < Jekyll::Reader
     def initialize(site)
       @site = site
       @theme = site.theme
@@ -27,7 +27,7 @@ module Jekyll
         # show contents of "<theme>/_data/" dir being read while degugging.
         inspect_theme_data
         theme_data = ThemeDataReader.new(site).read(site.config["data_dir"])
-        @site.data = Utils.deep_merge_hashes(theme_data, @site.data)
+        @site.data = Jekyll::Utils.deep_merge_hashes(theme_data, @site.data)
         #
         # show contents of merged site.data hash while debugging with
         # additional --data switch.

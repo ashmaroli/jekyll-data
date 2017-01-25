@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
-module Jekyll
-  class ThemeConfiguration < Configuration
+module JekyllData
+  class ThemeConfiguration < Jekyll::Configuration
     class << self
       # Public: Establish a new site.config hash by reading an optional config
       #         file within the theme-gem and appending the resulting hash to
@@ -11,18 +11,18 @@ module Jekyll
       #
       # Returns a config Hash to be used by an 'after_reset' hook.
       def reconfigure(site)
-        default_hash = Configuration::DEFAULTS
+        default_hash = Jekyll::Configuration::DEFAULTS
         theme_config = ThemeConfiguration.new(site).read_theme_config
 
         # Merge with existing site.config and strip any remaining defaults
-        config = Utils.deep_merge_hashes(
+        config = Jekyll::Utils.deep_merge_hashes(
           theme_config, site.config
         ).reject { |key, value| value == default_hash[key] }
 
         # Merge DEFAULTS < _config.yml in theme-gem < _config.yml at source
         # and redefine site.config
-        site.config = Configuration.from(
-          Utils.deep_merge_hashes(theme_config, config)
+        site.config = Jekyll::Configuration.from(
+          Jekyll::Utils.deep_merge_hashes(theme_config, config)
         )
       end
     end

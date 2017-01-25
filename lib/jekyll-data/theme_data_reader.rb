@@ -1,10 +1,10 @@
-module Jekyll
-  class ThemeDataReader < DataReader
+module JekyllData
+  class ThemeDataReader < Jekyll::DataReader
     attr_reader :site, :content
     def initialize(site)
       @site = site
       @content = {}
-      @entry_filter = EntryFilter.new(site)
+      @entry_filter = Jekyll::EntryFilter.new(site)
     end
 
     def read(dir)
