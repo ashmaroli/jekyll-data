@@ -1,0 +1,3 @@
+# No parsable data. Just a file with a lone comment string. Is this a data
+# file then?. This string is not accessible via `{{ site.data.blank }}` either.
+# Will output "false".
