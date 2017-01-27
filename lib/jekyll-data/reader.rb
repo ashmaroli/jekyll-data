@@ -61,6 +61,11 @@ module JekyllData
     # Print contents of the merged data hash
     def inspect_merged_hash
       print "Inspecting:", "Site Data >>"
+
+      # the width of generated logger[message]
+      @width = 50
+      @dashes = "-" * @width
+
       inspect_hash @site.data
       print_clear_line
     end
@@ -79,10 +84,9 @@ module JekyllData
         if value.is_a? Hash
           inspect_inner_hash value
         elsif value.is_a? Array
-          print_label key
           extract_hashes_and_print value
         else
-          print_value "'#{value}'"
+          print_string value.to_s
         end
       end
     end
@@ -93,7 +97,6 @@ module JekyllData
         if value.is_a? Array
           print_label key
           extract_hashes_and_print value
-          print_clear_line
         elsif value.is_a? Hash
           print_subkey_and_value key, value
         else
@@ -107,7 +110,7 @@ module JekyllData
     def extract_hashes_and_print(array)
       array.each do |entry|
         if entry.is_a? String
-          print "-", entry
+          print_list entry
         else
           inspect_inner_hash entry
         end
@@ -117,26 +120,66 @@ module JekyllData
     # Private methods for formatting log messages while debugging and a
     # method to issue conflict alert and abort site.process
 
+    # Splits a string longer than the value of '@width' into smaller
+    # strings and prints each line as a logger[message]
+    #
+    # string - the long string
+    #
+    # label - optional text to designate the printed lines.
+    def print_long_string(string, label = "")
+      strings = string.scan(%r!.{1,#{@width}}\s+!).map(&:strip)
+      first_line = strings.first.cyan
+
+      label.empty? ? print_value(first_line) : print(label, first_line)
+      strings[1..-1].each { |s| print_value s.cyan }
+    end
+
     # Prints key as logger[topic] and value as [message]
     def print_hash(key, value)
-      print "#{key}:", value
+      if value.length > @width
+        print_long_string value, "#{key}:"
+      else
+        print "#{key}:", value.cyan
+      end
+    end
+
+    def print_list(item)
+      if item.length > @width
+        print_long_string item, "-"
+      else
+        print "-", item.cyan
+      end
+    end
+
+    def print_string(str)
+      if str.length > @width
+        print_long_string str
+      else
+        print_value str.inspect
+      end
     end
 
     # Prints the site.data[key] in color
     def print_key(key)
-      @dashes = "------------------------"
-      print_value @dashes.to_s.cyan
-      print "Data Key:", key.to_s.cyan
-      print_value @dashes.to_s.cyan
+      print_clear_line
+      print "Data Key:", " #{key} ".center(@width, "=")
+      print_clear_line
     end
 
     # Prints label, keys and values of mappings
     def print_subkey_and_value(key, value)
       print_label key
       value.each do |subkey, val|
-        print_hash subkey, val
+        if val.is_a? Hash
+          print_inner_subkey subkey
+          inspect_inner_hash val
+        elsif val.is_a? Array
+          print_inner_subkey subkey
+          extract_hashes_and_print val
+        elsif val.is_a? String
+          print_hash subkey, val
+        end
       end
-      print_dashes
     end
 
     # Print only logger[message], [topic] = nil
@@ -150,7 +193,11 @@ module JekyllData
 
     # Print only logger[topic] appended with a colon
     def print_label(key)
-      print "#{key}:"
+      print_value " #{key} ".center(@width, "-")
+    end
+
+    def print_inner_subkey(key)
+      print "#{key}:", @dashes
     end
 
     def print_dashes
