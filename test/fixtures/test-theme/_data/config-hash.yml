@@ -1,0 +1,36 @@
+title: Test Hash
+email: tester@domain.com
+description: >
+  This file is used to test the output of various hash types to the plugin's
+  logger output.
+
+  This particular folded (uses '>') block of text will showcase outputting
+  long strings of text as wrapped to multiple lines of a set width. Another
+  related block would be the 'non-folded' type (uses '|') and its lines are
+  are new-line-aware.
+baseurl: "/blog"
+url: ""
+markdown: kramdown
+post_excerpts: enabled
+
+# Complex Hash object with nest hash-maps, lists and sequences.
+test-theme:
+  logo: logo.png
+  sidebar: enabled
+  theme_variant: Charcoal
+  recent_posts:
+    style: list
+    quantity: '4'
+  plugins:
+    - test-plugin
+    - another-test-plugin
+  navbar:
+    - title: About Me
+      page: about-me.html
+      tooltip: Get to know me here.
+    - title: Contact Us
+      page:  contact-us.html
+      tooltip: Various ways to reach me.
+gems:
+  - test-plugin
+  - another-test-plugin

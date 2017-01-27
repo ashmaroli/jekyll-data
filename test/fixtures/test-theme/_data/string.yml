@@ -1,0 +1,3 @@
+>
+  No keys. Just a file with a lone string. Is this a data file then? This
+  string is still accessible via `{{ site.data.string }}` in the templates.
