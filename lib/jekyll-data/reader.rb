@@ -30,8 +30,8 @@ module JekyllData
         @site.data = Jekyll::Utils.deep_merge_hashes(theme_data, @site.data)
         #
         # show contents of merged site.data hash while debugging with
-        # additional --data switch.
-        inspect_merged_hash if site.config["data"] && site.config["verbose"]
+        # additional --show-data switch.
+        inspect_merged_hash if site.config["show-data"] && site.config["verbose"]
       end
     end
 
@@ -48,8 +48,8 @@ module JekyllData
       print_clear_line
       print "Merging:", "Theme Data Hash..."
 
-      unless site.config["data"] && site.config["verbose"]
-        print_value "use --data with --verbose to output merged " \
+      unless site.config["show-data"] && site.config["verbose"]
+        print_value "use --show-data with --verbose to output merged " \
                     "Data Hash.".cyan
         print_clear_line
       end
