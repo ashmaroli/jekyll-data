@@ -29,9 +29,9 @@ then
   echo ""
   echo "Build Success."
   echo ""
-  echo "Building the site with --verbose and --data"
-  echo "-------------------------------------------"
-  BUNDLE_GEMFILE=Gemfile bundle exec jekyll build --verbose --data --trace
+  echo "Building the site with --verbose and --show-data"
+  echo "------------------------------------------------"
+  BUNDLE_GEMFILE=Gemfile bundle exec jekyll build --verbose --show-data --trace
 
   exit 0
 else

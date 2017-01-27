@@ -36,7 +36,7 @@ Metrics/LineLength:
   Severity: warning
 Metrics/MethodLength:
   CountComments: false
-  Max: 20
+  Max: 21
   Severity: error
 Metrics/ModuleLength:
   Max: 240

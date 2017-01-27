@@ -21,7 +21,8 @@ module Jekyll
         "Render posts that were marked as unpublished"
       c.option "quiet", "-q", "--quiet", "Silence output."
       c.option "verbose", "-V", "--verbose", "Print verbose output."
-      c.option "data", "--data", "Print verbose data output when used with --verbose."
+      c.option "show-data", "--show-data",
+        "Print merged site-data hash when used with --verbose."
       c.option "incremental", "-I", "--incremental", "Enable incremental rebuild."
     end
   end
