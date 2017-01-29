@@ -19,7 +19,7 @@ module JekyllData
           theme_config, site.config
         ).reject { |key, value| value == default_hash[key] }
 
-        # Merge DEFAULTS < _config.yml in theme-gem < _config.yml at source
+        # Merge DEFAULTS < _config.yml in theme-gem < config file(s) from source
         # and redefine site.config
         site.config = Jekyll::Configuration.from(
           Jekyll::Utils.deep_merge_hashes(theme_config, config)

@@ -70,8 +70,10 @@ module JekyllData
       print_clear_line
     end
 
+    # --------------------------------------------------------------------
     # Private helper methods to inspect data hash and output contents
     # to logger at level debugging.
+    # --------------------------------------------------------------------
 
     # Dissect the (merged) site.data hash and print its contents
     #
@@ -117,8 +119,11 @@ module JekyllData
       end
     end
 
-    # Private methods for formatting log messages while debugging and a
-    # method to issue conflict alert and abort site.process
+    #
+
+    # --------------------------------------------------------------------
+    # Private methods for formatting log messages while debugging
+    # --------------------------------------------------------------------
 
     # Splits a string longer than the value of '@width' into smaller
     # strings and prints each line as a logger[message]
