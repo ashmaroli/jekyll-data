@@ -43,14 +43,14 @@ module JekyllData
     # Print a list of data file(s) within the theme-gem
     def inspect_theme_data
       print_clear_line
-      print "Reading:", "Theme Data Files..."
-      @theme_data_files.each { |file| print_value file }
+      Jekyll.logger.debug "Reading:", "Theme Data Files..."
+      @theme_data_files.each { |file| Jekyll.logger.debug "", file }
       print_clear_line
-      print "Merging:", "Theme Data Hash..."
+      Jekyll.logger.debug "Merging:", "Theme Data Hash..."
 
       unless site.config["show-data"] && site.config["verbose"]
-        print_value "use --show-data with --verbose to output merged " \
-                    "Data Hash.".cyan
+        Jekyll.logger.debug "", "use --show-data with --verbose to output " \
+                                "merged Data Hash.".cyan
         print_clear_line
       end
     end
@@ -60,7 +60,7 @@ module JekyllData
     #
     # Print contents of the merged data hash
     def inspect_merged_hash
-      print "Inspecting:", "Site Data >>"
+      Jekyll.logger.debug "Inspecting:", "Site Data >>"
 
       # the width of generated logger[message]
       @width = 50
@@ -208,9 +208,11 @@ module JekyllData
       print ""
     end
 
-    # Redefine Jekyll Loggers
-    def print(arg1, arg2 = "")
-      Jekyll.logger.debug arg1, arg2
+    # Redefine Jekyll Loggers to have the [topic] indented by 30.
+    # (rjust by just 29 to accomodate the additional whitespace added
+    # by Jekyll)
+    def print(topic, message = "")
+      Jekyll.logger.debug topic.rjust(29), message
     end
   end
 end
