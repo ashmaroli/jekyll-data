@@ -127,7 +127,7 @@ module JekyllData
     #
     # label - optional text to designate the printed lines.
     def print_long_string(string, label = "")
-      strings = string.scan(%r!.{1,#{@width}}\s+!).map(&:strip)
+      strings = string.scan(%r!(.{1,#{@width}})(\s+|\W|\Z)!).map { |s| s.join.strip }
       first_line = strings.first.cyan
 
       label.empty? ? print_value(first_line) : print(label, first_line)
