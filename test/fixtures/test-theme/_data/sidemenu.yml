@@ -7,6 +7,6 @@
 - title: Contact
   url: /contact/
 - title: Link 1
-  url: /link-1.html
+  url: http://an-absolute-url-to/a-really-deep/filecalled/some_page.html
 - title: Link 2
-  url: /link-2.html
+  url: http://another-absolute-url-to/a-page/
