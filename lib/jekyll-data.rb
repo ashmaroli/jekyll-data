@@ -42,7 +42,12 @@ end
 # ---------------------------------------------------------------------------
 Jekyll::Hooks.register :site, :after_init do |site|
   if site.theme
-    Jekyll.logger.info "Theme Config file:", @file if File.exist?(@file)
     site.reader = JekyllData::Reader.new(site)
+  else
+    Jekyll.logger.abort_with(
+      "JekyllData:",
+      "Error! This plugin only works with gem-based jekyll-themes. " \
+      "Please disable this plugin to proceed."
+    )
   end
 end
