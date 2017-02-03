@@ -22,8 +22,8 @@ require_relative "jekyll/unified_payload_drop"
 # ----------------------------------------------------------------------------
 Jekyll::Hooks.register :site, :after_reset do |site|
   if site.theme
-    @file = site.in_theme_dir("_config.yml")
-    JekyllData::ThemeConfiguration.reconfigure(site) if File.exist?(@file)
+    file = site.in_theme_dir("_config.yml")
+    JekyllData::ThemeConfiguration.reconfigure(site) if File.exist?(file)
   else
     Jekyll.logger.abort_with(
       "JekyllData:",
@@ -42,7 +42,8 @@ end
 # ---------------------------------------------------------------------------
 Jekyll::Hooks.register :site, :after_init do |site|
   if site.theme
-    Jekyll.logger.info "Theme Config file:", @file if File.exist?(@file)
+    file = site.in_theme_dir("_config.yml")
+    Jekyll.logger.info "Theme Config file:", file if File.exist?(file)
     site.reader = JekyllData::Reader.new(site)
   end
 end
