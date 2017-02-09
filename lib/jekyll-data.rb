@@ -9,9 +9,9 @@ module JekyllData
 end
 
 # Monkey-patches
-require_relative "jekyll/theme"
 require_relative "jekyll/build_options"
-require_relative "jekyll/unified_payload_drop"
+require_relative "jekyll/data_path"
+require_relative "jekyll/theme_drop"
 
 # ----------------------------------------------------------------------------
 # Modify the current site instance if it uses a gem-based theme else have this
