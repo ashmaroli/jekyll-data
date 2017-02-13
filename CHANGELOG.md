@@ -1,4 +1,58 @@
 
+### UNRELEASED
+
+#### Major Enhancements
+
+  * `{{ theme.myvariable }}` now points to `site.<theme-name>.myvariable` instead of `site.data.<theme-name>.myvariable`.  **[[`#08`][]]**
+  * extracting a theme-gem's config hash and incorporating it into the site's internal config hash is handled by a new  `ThemeConfiguration` class. **[[`#09`][], [`#11`][]]**
+  * All new classes are now loaded under `JekyllData` module. The `Jekyll` namespace will only contain patches to the original `Jekyll` module or its classes. **[[`#15`][], [`#22`][]]**
+
+[`#08`]: https://github.com/ashmaroli/jekyll-data/pull/8
+[`#09`]: https://github.com/ashmaroli/jekyll-data/pull/9
+[`#11`]: https://github.com/ashmaroli/jekyll-data/pull/11
+[`#15`]: https://github.com/ashmaroli/jekyll-data/pull/15
+[`#22`]: https://github.com/ashmaroli/jekyll-data/pull/22
+
+
+#### Minor Enhancements
+
+  * A new switch `--show-data` has been added to Jekyll's build-options as a supplement to existing `--verbose` switch.  **[[`#13`][], [`#18`][], [`#20`][]]**
+  * Debug data output from `--show-data` is now at a fixed width and wraps nicely to the next line. **[[`#17`][], [`#19`][]]**
+
+[`#13`]: https://github.com/ashmaroli/jekyll-data/pull/13
+[`#17`]: https://github.com/ashmaroli/jekyll-data/pull/17
+[`#18`]: https://github.com/ashmaroli/jekyll-data/pull/18
+[`#19`]: https://github.com/ashmaroli/jekyll-data/pull/19
+[`#20`]: https://github.com/ashmaroli/jekyll-data/pull/20
+
+
+#### Bug Fixes
+
+  * A theme-gem's config hash is now incorporated via the `after-reset` hook to enable Jekyll `require` the necessary plugins listed in the theme-gem's config file. **[[`#12`][]]**
+
+[`#12`]: https://github.com/ashmaroli/jekyll-data/pull/12
+
+
+#### Development Improvements
+
+  * Improved test-suite. **[[`#14`][], [`#16`][]]**
+    * Added cucumber `features` and a script for build assessment.
+    * Added a couple of dummy plugins to test loading of plugins listed in a theme-gem's config file.
+    * Included testing with Ruby 2.4.0.
+
+[`#14`]: https://github.com/ashmaroli/jekyll-data/pull/14
+[`#16`]: https://github.com/ashmaroli/jekyll-data/pull/16
+
+
+#### Documentation
+
+  * Update and improve documentation. **[[`#10`][]]**
+
+[`#10`]: https://github.com/ashmaroli/jekyll-data/pull/10
+
+
+--
+
 ### 0.4.0 / 2016-12-14
 
 #### Minor Improvements
