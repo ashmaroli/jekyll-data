@@ -47,8 +47,10 @@
 #### Documentation
 
   * Update and improve documentation. **[[`#10`][]]**
+  * Added this `CHANGELOG.md`. **[[`#24`][]]**
 
 [`#10`]: https://github.com/ashmaroli/jekyll-data/pull/10
+[`#24`]: https://github.com/ashmaroli/jekyll-data/pull/24
 
 
 --
