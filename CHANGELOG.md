@@ -39,9 +39,11 @@
     * Added cucumber `features` and a script for build assessment.
     * Added a couple of dummy plugins to test loading of plugins listed in a theme-gem's config file.
     * Included testing with Ruby 2.4.0.
+  * Document the main gems used for testing via `gemspec`. Upgrade Bundler to v1.14.3 and above. **[[`#23`][]]**
 
 [`#14`]: https://github.com/ashmaroli/jekyll-data/pull/14
 [`#16`]: https://github.com/ashmaroli/jekyll-data/pull/16
+[`#23`]: https://github.com/ashmaroli/jekyll-data/pull/23
 
 
 #### Documentation
