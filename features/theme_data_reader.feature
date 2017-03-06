@@ -11,10 +11,9 @@ Feature: Reading Data files in Gem-based Themes
       | name          | path                            |
       | test-plugin   | ../../test/fixtures/test-plugin |
     When I run bundle exec jekyll build
-    Then I should get a non-zero exit status
-    And I should see "JekyllData: Error!" in the build output
-    And the _site directory should not exist
-    And the "_site/test-feed.xml" file should not exist
+    Then I should get a zero exit status
+    And the _site directory should exist
+    And the "_site/test-feed.xml" file should exist
 
   Scenario: Theme-gem has a data file to support i18n
     Given I have a configuration file with:

@@ -29,8 +29,6 @@ end
 
 ## Usage
 
-**Note:** *This plugin will only run in conjunction with a gem-based Jekyll-theme.*
-
 As long as the plugin-gem has been installed properly, and is included in the Gemfile's `:jekyll_plugins` group, data files supported by Jekyll and present in the `_data` directory at the root of your theme-gem will be read. Their contents will be added to the site's internal data hash, provided, an identical data hash doesn't already exist at the site-source.
 
 If the theme-gem also includes a `_config.yml` at its root, then it will be read as well. The resulting config hash will be mixed into the site's existing config hash, filling in where the *keys* are not already defined. In other words, the config file at `source` will override corresponding identical keys in a `_config.yml` within the theme-gem which would in turn override corresponding `DEFAULTS` from Jekyll:

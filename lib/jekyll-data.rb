@@ -14,8 +14,7 @@ require_relative "jekyll/data_path"
 require_relative "jekyll/theme_drop"
 
 # ----------------------------------------------------------------------------
-# Modify the current site instance if it uses a gem-based theme else have this
-# plugin disabled.
+# Modify the current site instance only if it uses a gem-based theme.
 #
 # if a '_config.yml' is present at the root of theme-gem, it is evaluated and
 # the extracted hash data is incorprated into the site's config hash.
@@ -24,12 +23,6 @@ Jekyll::Hooks.register :site, :after_reset do |site|
   if site.theme
     file = site.in_theme_dir("_config.yml")
     JekyllData::ThemeConfiguration.reconfigure(site) if File.exist?(file)
-  else
-    Jekyll.logger.abort_with(
-      "JekyllData:",
-      "Error! This plugin only works with gem-based jekyll-themes. " \
-      "Please disable this plugin to proceed."
-    )
   end
 end
 
