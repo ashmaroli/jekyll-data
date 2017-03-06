@@ -43,7 +43,7 @@ end
 Jekyll::Hooks.register :site, :after_init do |site|
   if site.theme
     file = site.in_theme_dir("_config.yml")
-    Jekyll.logger.info "Theme Config file:", file if File.exist?(file)
+    Jekyll.logger.debug "Theme Config file:", file if File.exist?(file)
     site.reader = JekyllData::Reader.new(site)
   end
 end
