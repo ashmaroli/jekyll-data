@@ -70,11 +70,11 @@ end
 Given(%r!^I have a valid Gemfile$!) do
   File.write("Gemfile", Jekyll::Utils.strip_heredoc(<<-DATA))
     gem "test-theme", path: File.expand_path(
-    "../../test/fixtures/test-theme", File.dirname(__FILE__)
+    "../../test/fixtures/test-theme", __dir__
     )
 
     group :jekyll_plugins do
-      gem "jekyll-data", path: File.expand_path("../../", File.dirname(__FILE__))
+      gem "jekyll-data", path: File.expand_path("../../", __dir__)
       # any other plugins
     end
 
@@ -97,9 +97,7 @@ Given(%r!^I have a Gemfile with (.*) plugin set to (.*)$!) do |name, path|
   File.write(
     "Gemfile", content.gsub(
       "# any other plugins",
-      "gem #{name}, path: File.expand_path(#{path}, " \
-      "File.dirname(__FILE__))\n" \
-      "  # any other plugins"
+      "gem #{name}, path: File.expand_path(#{path}, __dir__)\n  # any other plugins"
     )
   )
 end

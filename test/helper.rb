@@ -45,7 +45,7 @@ module DirectoryHelpers
   end
 
   def test_dir(*subdirs)
-    File.join(File.dirname(__FILE__), *subdirs)
+    File.join(__dir__, *subdirs)
   end
 end
 
