@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllData
   class ThemeDataReader < Jekyll::DataReader
     attr_reader :site, :content

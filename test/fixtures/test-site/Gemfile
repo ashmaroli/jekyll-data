@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 
 gem "jekyll", "~> 3.3"
@@ -14,12 +16,12 @@ gem "jekyll", "~> 3.3"
 #     - otherwise, include it here, not necessarily under the ':jekyll_plugins' group
 #
 #   - You'll have to include the plugin(s) either in your `_config.yml`, under 'gems:'
-#     or in the Gemfile under ':jekyll_plugins' group 
-gem "test-theme", path: File.expand_path("../test-theme", __dir__)
-gem "test-plugin", path: File.expand_path("../test-plugin", __dir__)
+#     or in the Gemfile under ':jekyll_plugins' group
+gem "test-plugin", :path => File.expand_path("../test-plugin", __dir__)
+gem "test-theme", :path => File.expand_path("../test-theme", __dir__)
 
 # Recommended: all other plugins outside the theme's scope including 'jekyll-data' to be added under this group.
 group :jekyll_plugins do
-  gem "jekyll-data", path: File.expand_path("../../../", __dir__)
-  gem "another-test-plugin", path: File.expand_path("../another-test-plugin", __dir__)
+  gem "another-test-plugin", :path => File.expand_path("../another-test-plugin", __dir__)
+  gem "jekyll-data", :path => File.expand_path("../../../", __dir__)
 end
