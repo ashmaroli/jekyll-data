@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "fileutils"
 require "jekyll"
 require "open3"
@@ -51,7 +53,7 @@ end
 
 def all_steps_to_path(path)
   source = source_dir
-  dest = Pathname.new(path).expand_path
+  dest   = Pathname.new(path).expand_path
   paths  = []
 
   dest.ascend do |f|
@@ -110,7 +112,8 @@ def run_in_shell(*args)
 
   File.write(Paths.status_file, p.value.exitstatus)
   File.open(Paths.output_file, "wb") do |f|
-    f.puts "$ " << args.join(" ")
+    f.print "$ "
+    f.puts args.join(" ")
     f.puts out
     f.puts err
     f.puts "EXIT STATUS: #{p.value.exitstatus}"
