@@ -9,7 +9,10 @@ module Jekyll
       #        {{ site.minima.date_format }} can be shortened to simply
       #        {{ theme.date_format }}.
       def theme
-        @theme_drop ||= site.fallback_data[site.fallback_data["theme"]]
+        @theme_drop ||= begin
+          config = site.send(:fallback_data)
+          config[config["theme"]]
+        end
       end
     end
   end
