@@ -3,7 +3,7 @@
 module Jekyll
   class Theme
     def data_path
-      path_for "_data".freeze
+      @data_path ||= path_for "_data"
     end
   end
 end
