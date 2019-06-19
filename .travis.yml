@@ -1,14 +1,11 @@
 script: script/cibuild
 cache: bundler
 language: ruby
-sudo: false
 
 rvm:
-  - &ruby1 2.4.0
-  - &ruby2 2.3.3
-  - &ruby3 2.2.6
-  - &ruby4 2.1.9
-  - &jruby jruby-9.1.7.0
+  - &ruby1 2.6.1
+  - &ruby2 2.3.7
+  - &jruby jruby-9.2.7.0
 
 matrix:
   include:
