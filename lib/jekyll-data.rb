@@ -20,11 +20,15 @@ require_relative "jekyll/theme_drop"
 #
 # if a '_config.yml' is present at the root of theme-gem, it is evaluated and
 # the extracted hash data is incorprated into the site's config hash.
+#
+# *Jekyll 4.0 has this feature incorporated in its core.*
 # ----------------------------------------------------------------------------
-Jekyll::Hooks.register :site, :after_reset do |site|
-  if site.theme
-    file = site.in_theme_dir("_config.yml")
-    JekyllData::ThemeConfiguration.reconfigure(site) if File.exist?(file)
+unless Jekyll::VERSION.start_with?('4')
+  Jekyll::Hooks.register :site, :after_reset do |site|
+    if site.theme
+      file = site.in_theme_dir("_config.yml")
+      JekyllData::ThemeConfiguration.reconfigure(site) if File.exist?(file)
+    end
   end
 end
 
@@ -34,11 +38,15 @@ end
 #
 # If a _config.yml exists at the root of the theme-gem, output its path.
 # Placed here inorder to avoid outputting the path after every regeneration.
+#
+# *Jekyll 4.0 detects a theme-configuration natively.*
 # ---------------------------------------------------------------------------
 Jekyll::Hooks.register :site, :after_init do |site|
   if site.theme
-    file = site.in_theme_dir("_config.yml")
-    Jekyll.logger.debug "Theme Config file:", file if File.exist?(file)
+    unless Jekyll::VERSION.start_with?('4')
+      file = site.in_theme_dir("_config.yml")
+      Jekyll.logger.info "Theme Config file:", file if File.exist?(file)
+    end
     site.reader = JekyllData::Reader.new(site)
   end
 end
