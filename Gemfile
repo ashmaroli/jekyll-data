@@ -3,6 +3,8 @@
 source "https://rubygems.org"
 gemspec
 
+gem "jekyll", ENV["JEKYLL_VERSION"] if ENV["JEKYLL_VERSION"]
+
 group :test do
   gem "activesupport", "~> 4.2" if RUBY_VERSION < "2.2.2"
   gem "another-test-plugin", :path => File.expand_path("test/fixtures/another-test-plugin", __dir__)
