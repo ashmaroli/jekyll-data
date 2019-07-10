@@ -23,7 +23,7 @@ require_relative "jekyll/theme_drop"
 #
 # *Jekyll 4.0 has this feature incorporated in its core.*
 # ----------------------------------------------------------------------------
-unless Jekyll::VERSION.start_with?('4')
+unless Jekyll::VERSION.start_with?("4")
   Jekyll::Hooks.register :site, :after_reset do |site|
     if site.theme
       file = site.in_theme_dir("_config.yml")
@@ -43,7 +43,7 @@ end
 # ---------------------------------------------------------------------------
 Jekyll::Hooks.register :site, :after_init do |site|
   if site.theme
-    unless Jekyll::VERSION.start_with?('4')
+    unless Jekyll::VERSION.start_with?("4")
       file = site.in_theme_dir("_config.yml")
       Jekyll.logger.info "Theme Config file:", file if File.exist?(file)
     end
