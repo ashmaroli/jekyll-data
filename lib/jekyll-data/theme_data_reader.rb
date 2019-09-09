@@ -22,7 +22,7 @@ module JekyllData
       return unless File.directory?(dir) && !@entry_filter.symlink?(dir)
 
       entries = Dir.chdir(dir) do
-        Dir["*.{yaml,yml,json,csv}"] + Dir["*"].select { |fn| File.directory?(fn) }
+        Dir["*.{yaml,yml,json,csv,tsv}"] + Dir["*"].select { |fn| File.directory?(fn) }
       end
 
       entries.each do |entry|
