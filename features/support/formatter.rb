@@ -174,6 +174,7 @@ module Jekyll
       #
 
       private
+
       def print_feature_element_name(keyword, name, source_line, _indent)
         @io.puts
 

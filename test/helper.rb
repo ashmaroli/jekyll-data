@@ -93,13 +93,15 @@ class JekyllDataTest < Minitest::Test
   end
 
   def site_configuration(overrides = {})
-    full_overrides = build_configs(overrides, build_configs({
-      "incremental" => false
-    }))
-    Configuration.from(full_overrides.merge({
-      "theme" => "test-theme",
-      "lang"  => "en"
-    }))
+    full_overrides = build_configs(
+      overrides, build_configs("incremental" => false)
+    )
+    Configuration.from(
+      full_overrides.merge(
+        "theme" => "test-theme",
+        "lang"  => "en"
+      )
+    )
   end
 
   def clear_dest
@@ -112,7 +114,7 @@ class JekyllDataTest < Minitest::Test
     Jekyll.logger = Logger.new stderr
     yield
     stderr.rewind
-    return stderr.string.to_s
+    stderr.string.to_s
   end
   alias_method :capture_stdout, :capture_output
   alias_method :capture_stderr, :capture_output

@@ -30,9 +30,7 @@ end
 #
 
 Given(%r!^I have an? (.*) directory$!) do |dir|
-  unless File.directory?(dir)
-    then FileUtils.mkdir_p(dir)
-  end
+  FileUtils.mkdir_p(dir) unless File.directory?(dir)
 end
 
 #
@@ -44,7 +42,7 @@ Given(%r!^I have a configuration file with "(.*)" set to "(.*)"$!) do |key, valu
     else
       {}
     end
-  config[key] = YAML.load(value)
+  config[key] = YAML.safe_load(value)
   File.write("_config.yml", YAML.dump(config))
 end
 
@@ -70,7 +68,7 @@ end
 #
 
 Given(%r!^I have a valid Gemfile$!) do
-  File.write("Gemfile", Jekyll::Utils.strip_heredoc(<<-DATA))
+  File.write("Gemfile", <<~DATA)
     gem "test-theme", path: File.expand_path(
     "../../test/fixtures/test-theme", __dir__
     )
@@ -97,7 +95,8 @@ end
 Given(%r!^I have a Gemfile with (.*) plugin set to (.*)$!) do |name, path|
   content = File.read("Gemfile")
   File.write(
-    "Gemfile", content.gsub(
+    "Gemfile",
+    content.gsub(
       "# any other plugins",
       "gem #{name}, path: File.expand_path(#{path}, __dir__)\n  # any other plugins"
     )
@@ -108,9 +107,7 @@ end
 
 When(%r!^I run jekyll(.*)$!) do |args|
   run_jekyll(args)
-  if args.include?("--verbose") || ENV["DEBUG"]
-    warn "\n#{jekyll_run_output}\n"
-  end
+  warn "\n#{jekyll_run_output}\n" if args.include?("--verbose") || ENV["DEBUG"]
 end
 
 #
@@ -118,9 +115,7 @@ end
 When(%r!^I run bundle(.*)$!) do |args|
   ENV["BUNDLE_GEMFILE"] = Paths.test_dir.join("Gemfile").to_s
   run_bundle(args)
-  if args.include?("--verbose") || ENV["DEBUG"]
-    warn "\n#{jekyll_run_output}\n"
-  end
+  warn "\n#{jekyll_run_output}\n" if args.include?("--verbose") || ENV["DEBUG"]
 end
 
 #

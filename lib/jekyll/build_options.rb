@@ -9,10 +9,10 @@ module Jekyll
       #
       alias_method :original_build_options, :add_build_options
 
-      def add_build_options(c)
-        original_build_options(c)
-        c.option "show-data", "--show-data",
-          "Print merged site-data hash when used with --verbose."
+      def add_build_options(cmd)
+        original_build_options(cmd)
+        cmd.option "show-data", "--show-data",
+                   "Print merged site-data hash when used with --verbose."
       end
     end
   end

@@ -1,17 +1,44 @@
+require: rubocop-jekyll
 inherit_gem:
-  jekyll: .rubocop.yml
+  rubocop-jekyll: '.rubocop.yml'
 
 AllCops:
-  Include:
-    - lib/**/*.rb
   Exclude:
-    - benchmark/**/*
     - script/**/*
     - vendor/**/*
+    - tmp/**/*
+
+Layout/AlignArray:
+  Exclude:
+    - 'features/support/helpers.rb'
+Layout/AlignParameters:
+  Exclude:
+    - 'features/support/formatter.rb'
+
 Metrics/LineLength:
   Exclude:
     - ./**/*.gemspec
     - ./**/Gemfile
     - !ruby/regexp /features\/.*.rb/
-Style/TrailingCommaInLiteral:
-  EnforcedStyleForMultiline: no_comma
+
+Naming/MemoizedInstanceVariableName:
+  Exclude:
+    - 'lib/jekyll/theme_drop.rb'
+    - 'test/fixtures/another-test-plugin/lib/another-test-plugin.rb'
+    - 'test/fixtures/test-plugin/lib/test-plugin.rb'
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'test/helper.rb'
+Style/SafeNavigation:
+  Exclude:
+    - 'lib/jekyll-data/theme_data_reader.rb'
+Style/SingleLineMethods:
+  Exclude:
+    - 'features/support/helpers.rb'
+Style/TrailingCommaInArrayLiteral:
+  Exclude:
+    - 'test/helper.rb'
+Style/TrailingCommaInHashLiteral:
+  Exclude:
+    - 'features/support/formatter.rb'

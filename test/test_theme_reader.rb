@@ -19,8 +19,10 @@ class TestThemeReader < JekyllDataTest
     end
 
     should "use data from theme gem" do
-      assert_equal File.read(@site.in_dest_dir("output.html")),
-        File.read(File.join(fixture_dir, "no_data_output.html"))
+      assert_equal(
+        File.read(File.join(fixture_dir, "no_data_output.html")),
+        File.read(@site.in_dest_dir("output.html"))
+      )
     end
   end
 
@@ -35,13 +37,17 @@ class TestThemeReader < JekyllDataTest
       @site.process
     end
     should "read and use data from other keys in theme gem" do
-      assert_equal File.read(@site.in_dest_dir("output.html")),
-        File.read(File.join(fixture_dir, "different_data_output.html"))
+      assert_equal(
+        File.read(File.join(fixture_dir, "different_data_output.html")),
+        File.read(@site.in_dest_dir("output.html"))
+      )
     end
 
     should "not override theme data" do
-      assert_equal File.read(@site.in_dest_dir("output.html")),
-        File.read(File.join(fixture_dir, "different_data_output.html"))
+      assert_equal(
+        File.read(File.join(fixture_dir, "different_data_output.html")),
+        File.read(@site.in_dest_dir("output.html"))
+      )
     end
   end
 
@@ -56,13 +62,17 @@ class TestThemeReader < JekyllDataTest
       @site.process
     end
     should "override theme data" do
-      assert_equal File.read(@site.in_dest_dir("override.html")),
-        File.read(File.join(fixture_dir, "same_data_override.html"))
+      assert_equal(
+        File.read(File.join(fixture_dir, "same_data_override.html")),
+        File.read(@site.in_dest_dir("override.html"))
+      )
     end
 
     should "also use data from other keys in theme gem" do
-      assert_equal File.read(@site.in_dest_dir("override.html")),
-        File.read(File.join(fixture_dir, "same_data_output.html"))
+      assert_equal(
+        File.read(File.join(fixture_dir, "same_data_output.html")),
+        File.read(@site.in_dest_dir("override.html"))
+      )
     end
   end
 

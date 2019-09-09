@@ -15,8 +15,10 @@ class TestThemeConfiguration < JekyllDataTest
     end
 
     should "read and use data under the 'theme' namespace" do
-      assert_equal File.read(@site.in_dest_dir("output.html")),
-        File.read(File.join(fixture_dir, "no_data_config_output.html"))
+      assert_equal(
+        File.read(File.join(fixture_dir, "no_data_config_output.html")),
+        File.read(@site.in_dest_dir("output.html"))
+      )
     end
   end
 

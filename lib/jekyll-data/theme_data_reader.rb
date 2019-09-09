@@ -3,6 +3,7 @@
 module JekyllData
   class ThemeDataReader < Jekyll::DataReader
     attr_reader :site, :content
+
     def initialize(site)
       @site = site
       @content = {}
@@ -11,6 +12,7 @@ module JekyllData
 
     def read(dir)
       return unless site.theme && site.theme.data_path
+
       base = site.in_theme_dir(dir)
       read_data_to(base, @content)
       @content
