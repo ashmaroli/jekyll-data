@@ -10,5 +10,6 @@
 /tmp/
 .jekyll-metadata
 .ruby-version
+.jekyll-cache
 .sass-cache
 test/dest

@@ -1,3 +1,41 @@
+### 1.1.0 / 2019-09-09
+
+#### Minor Enhancements
+
+  * Don't abort if the site doesn't use a gem-based theme. **[[`#25`][]]**
+  * Replace `File.dirname(__FILE__)` with `__dir__`. **[[`#26`][], [`e3694c8`][]]**
+  * Use frozen String literals. **[[`#27`][]]**
+  * Add support for Jekyll 4.0. **[[`#30`][], [`#32`][]]**
+  * Add support to read TSV files **[[`1c0b048`][]]**
+
+[`#25`]: https://github.com/ashmaroli/jekyll-data/pull/25
+[`#26`]: https://github.com/ashmaroli/jekyll-data/pull/26
+[`#27`]: https://github.com/ashmaroli/jekyll-data/pull/27
+[`#30`]: https://github.com/ashmaroli/jekyll-data/pull/30
+[`#32`]: https://github.com/ashmaroli/jekyll-data/pull/32
+[`e3694c8`]: https://github.com/ashmaroli/jekyll-data/commit/e3694c8c8bc2c064f549a7ecacad65b1bf7db7e0
+[`1c0b048`]: https://github.com/ashmaroli/jekyll-data/commit/1c0b048f7c1d8146b0808fee5263b7b06b1fa6de
+
+
+#### Bug Fixes
+
+  * Base theme-drop on fallback-data. **[[`#29`][]]**
+  * Properly designate `Jekyll::Drops::SiteDrop#fallback_data` as a `private` method. **[[`bb0447b`][]]**
+  * Memoize Jekyll::Theme#data_path. **[[`7feb5d6`][]]**
+
+[`#29`]: https://github.com/ashmaroli/jekyll-data/pull/29
+[`bb0447b`]: https://github.com/ashmaroli/jekyll-data/commit/bb0447b242c36f2277c07b45a37b053b56aa8d37
+[`7feb5d6`]: https://github.com/ashmaroli/jekyll-data/commit/7feb5d6921e0bcadbed7841d7e0d76c2b141c468
+
+
+#### Development Improvements
+
+  * Update Travis configuration. **[[`#31`][]]**
+  * Use `rubocop-jekyll` to enforce Jekyll's style-guide **[[`20c0550`][]]**
+
+[`#31`]: https://github.com/ashmaroli/jekyll-data/pull/31
+[`20c0550`]: https://github.com/ashmaroli/jekyll-data/commit/20c0550bcb2dacf8a202522bd576fe3aebbfb8a0
+
 
 ### 1.0.0 / 2017-02-15
 
