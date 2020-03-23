@@ -7,7 +7,10 @@ module JekyllData
     def initialize(site)
       @site = site
       @theme = site.theme
-      @theme_data_files = Dir[File.join(site.theme.data_path, "**", "*.{yaml,yml,json,csv,tsv}")]
+
+      if site.theme.data_path
+        @theme_data_files = Dir[File.join(site.theme.data_path, "**", "*.{yaml,yml,json,csv,tsv}")]
+      end
     end
 
     # Read data files within theme-gem.
@@ -44,7 +47,7 @@ module JekyllData
     def inspect_theme_data
       print_clear_line
       Jekyll.logger.debug "Reading:", "Theme Data Files..."
-      @theme_data_files.each { |file| Jekyll.logger.debug "", file }
+      @theme_data_files&.each { |file| Jekyll.logger.debug "", file }
       print_clear_line
       Jekyll.logger.debug "Merging:", "Theme Data Hash..."
 
