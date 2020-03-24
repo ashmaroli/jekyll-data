@@ -8,8 +8,8 @@ module JekyllData
       @site = site
       @theme = site.theme
 
-      if site.theme.data_path
-        @theme_data_files = Dir[File.join(site.theme.data_path, "**", "*.{yaml,yml,json,csv,tsv}")]
+      if @theme.data_path
+        @theme_data_files = Dir[File.join(@theme.data_path, "**", "*.{yaml,yml,json,csv,tsv}")]
       end
     end
 
@@ -47,7 +47,7 @@ module JekyllData
     def inspect_theme_data
       print_clear_line
       Jekyll.logger.debug "Reading:", "Theme Data Files..."
-      @theme_data_files&.each { |file| Jekyll.logger.debug "", file }
+      @theme_data_files.each { |file| Jekyll.logger.debug "", file }
       print_clear_line
       Jekyll.logger.debug "Merging:", "Theme Data Hash..."
 
