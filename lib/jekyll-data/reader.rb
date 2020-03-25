@@ -7,7 +7,10 @@ module JekyllData
     def initialize(site)
       @site = site
       @theme = site.theme
-      @theme_data_files = Dir[File.join(site.theme.data_path, "**", "*.{yaml,yml,json,csv,tsv}")]
+
+      if @theme.data_path
+        @theme_data_files = Dir[File.join(@theme.data_path, "**", "*.{yaml,yml,json,csv,tsv}")]
+      end
     end
 
     # Read data files within theme-gem.
