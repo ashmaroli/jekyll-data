@@ -91,7 +91,7 @@ fr:
 
 it:
   previous : precedente
-  next     : seguente
+  next     : successivo
 ```
 
 the Hash from above would be identical to one had the gem been shipped with a `_data/locales` directory containing individual files for each language data.
