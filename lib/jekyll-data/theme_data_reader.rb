@@ -5,9 +5,9 @@ module JekyllData
     attr_reader :site, :content
 
     def initialize(site)
-      super(site)
+      super
 
-      @source_dir = site.in_theme_dir('/')
+      @source_dir = site.in_theme_dir("/")
     end
 
     def read(dir)
