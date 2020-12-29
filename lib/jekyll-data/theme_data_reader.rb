@@ -5,9 +5,9 @@ module JekyllData
     attr_reader :site, :content
 
     def initialize(site)
-      @site = site
-      @content = {}
-      @entry_filter = Jekyll::EntryFilter.new(site)
+      super(site)
+
+      @source_dir = site.in_theme_dir('/')
     end
 
     def read(dir)
