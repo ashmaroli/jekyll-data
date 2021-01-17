@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-gem "jekyll", "~> 3.3"
+gem "jekyll", ">= 3.3", "< 5.0.0"
 
 # use the local-versions of the gems for tests.
 # gem "test-plugin" is placed here to use the `:path` method to point to the local version.
