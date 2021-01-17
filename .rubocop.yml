@@ -8,14 +8,13 @@ AllCops:
     - vendor/**/*
     - tmp/**/*
 
-Layout/AlignArray:
+Layout/ArrayAlignment:
   Exclude:
     - 'features/support/helpers.rb'
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   Exclude:
     - 'features/support/formatter.rb'
-
-Metrics/LineLength:
+Layout/LineLength:
   Exclude:
     - ./**/*.gemspec
     - ./**/Gemfile
