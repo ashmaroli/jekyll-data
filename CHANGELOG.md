@@ -1,3 +1,28 @@
+### 1.1.1 / 2021-01-24
+
+#### Bug Fixes
+
+  * Don't fail if the theme doesn't have a data dir. **[[`#36`][]]** by [@fauno][]
+  * Fix incompatibility with Jekyll 4.2. **[[`#38`][]]** by [@fauno][]
+
+[`#36`]: https://github.com/ashmaroli/jekyll-data/pull/36
+[`#38`]: https://github.com/ashmaroli/jekyll-data/pull/38
+[@fauno]: https://github.com/fauno
+
+
+#### Development Improvements
+
+  * Bump development dependencies and tested Ruby versions
+
+
+#### Documentation
+
+  * Use "successivo" as it's more widely used. **[[`#37`][]]** by [@Samplasion][]
+
+[`#37`]: https://github.com/ashmaroli/jekyll-data/pull/37
+[@Samplasion]: https://github.com/Samplasion
+
+
 ### 1.1.0 / 2019-09-09
 
 #### Minor Enhancements
